@@ -21,7 +21,7 @@ public class UserController {
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
-    @GetMapping("/{id}") // Kết hợp lại thành /BASE_API/{id}
+    @GetMapping("/users/{id}") // Kết hợp lại thành /BASE_API/{id}
     public User getUserById(@PathVariable Long id) {
         return userRepository.findById(id).orElse(null);
     }
