@@ -22,14 +22,14 @@ CommandLineRunner initDatabase(UserRepository repository) {
             user1.setName("Nguyen Van A");
             user1.setUsername("nguyenvana");
             user1.setPassword("password123");
-            user1.setRole("USER");
+            user1.setRole("ROLE_USER");
             repository.save(user1);
             
             User user2 = new User();
             user2.setName("Le Thi B");
             user2.setUsername("lethib");
             user2.setPassword("password456");
-            user2.setRole("ADMIN");
+            user2.setRole("ROLE_ADMIN");
             repository.save(user2);
         }
     };
