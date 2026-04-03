@@ -18,7 +18,7 @@ import com.example.demo.repository.StudentRepository;
 
 @RestController
 @RequestMapping("/api/students")
-@CrossOrigin(origins = {"https://users-management-topaz.vercel.app","http://192.168.1.3:5173"})
+@CrossOrigin("*")
 public class StudentController {
     @Autowired
     private StudentRepository studentRepository;   

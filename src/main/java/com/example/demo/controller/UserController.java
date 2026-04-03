@@ -13,7 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("") // Định nghĩa tiền tố đường dẫn
-@CrossOrigin(origins = {"https://users-management-topaz.vercel.app","http://192.168.1.3:5173"}) // Cho phép CORS cho cả hai nguồn
+@CrossOrigin("*")
 public class UserController {
 
     @Autowired

@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/auth")
-@CrossOrigin(origins = {"https://users-management-topaz.vercel.app","http://192.168.1.3:5173"})
+@CrossOrigin("*")
 public class AuthController {
 
     @Autowired
