@@ -3,6 +3,7 @@ package com.example.demo.entity;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -27,7 +28,7 @@ public class SinhVien {
 
     @ManyToOne
     @JoinColumn(name = "malop")
-    @JsonIgnore
+    @JsonIgnoreProperties({"sinhviens","tenlop"})
     private Lop lop;
     @OneToMany(mappedBy = "sinhVien")
     @JsonIgnore
