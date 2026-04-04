@@ -1,10 +1,11 @@
 package com.example.demo.repository;
 
-import com.example.demo.entity.SinhVien;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import com.example.demo.entity.MonHoc;
+
 @Repository
-public interface StudentRepository extends JpaRepository<SinhVien, String> {
-    
+public interface MonHocRepository extends JpaRepository<MonHoc, String> {
+
 }

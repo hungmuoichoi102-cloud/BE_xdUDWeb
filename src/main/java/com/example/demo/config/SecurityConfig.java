@@ -28,10 +28,21 @@ public class SecurityConfig {
         http
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
+                //endpoint nào không cần xác thực thì thêm vào đây
                 .requestMatchers("/api/auth/**").permitAll()
                 .requestMatchers("/users/**").permitAll()
+                //phân quyền cho sinh viên
                 .requestMatchers(HttpMethod.GET, "/api/students/**").hasAnyRole("USER", "ADMIN")
                 .requestMatchers("/api/students/**").hasRole("ADMIN")
+                //phân quyền cho môn học
+                .requestMatchers(HttpMethod.GET, "/api/monhocs/**").hasAnyRole("USER", "ADMIN")
+                .requestMatchers("/api/monhocs/**").hasRole("ADMIN")
+                //phân quyền cho lớp
+                .requestMatchers(HttpMethod.GET, "/api/lops/**").hasAnyRole("USER", "ADMIN")
+                .requestMatchers("/api/lops/**").hasRole("ADMIN")
+                //phân quyền cho điểm 
+                .requestMatchers(HttpMethod.GET, "/api/grades/**").hasAnyRole("USER", "ADMIN")
+                .requestMatchers("/api/grades/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
             )
             .httpBasic(withDefaults());

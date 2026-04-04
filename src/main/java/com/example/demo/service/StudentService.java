@@ -1,6 +1,6 @@
 package com.example.demo.service;
 
-import com.example.demo.entity.Student;
+import com.example.demo.entity.SinhVien;
 import com.example.demo.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,31 +14,36 @@ public class StudentService {
     @Autowired
     private StudentRepository studentRepository;
 
-    public List<Student> getAllStudents() {
+    public List<SinhVien> getAllStudents() {
         return studentRepository.findAll();
     }
 
-    public Optional<Student> getStudentById(Long id) {
+    public Optional<SinhVien> getStudentById(String id) {
         return studentRepository.findById(id);
     }
 
-    public Student createStudent(Student student) {
+    public SinhVien createStudent(SinhVien student) {
         return studentRepository.save(student);
     }
 
-    public Student updateStudent(Long id, Student studentDetails) {
-        Optional<Student> student = studentRepository.findById(id);
+    public SinhVien updateStudent(String id, SinhVien studentDetails) {
+        Optional<SinhVien> student = studentRepository.findById(id);
         if (student.isPresent()) {
-            Student existingStudent = student.get();
-            existingStudent.setName(studentDetails.getName());
-            existingStudent.setEmail(studentDetails.getEmail());
+            SinhVien existingStudent = student.get();
+            existingStudent.setMssv(studentDetails.getMssv());
+            existingStudent.setHo(studentDetails.getHo());
+            existingStudent.setTen(studentDetails.getTen());
             existingStudent.setNgaysinh(studentDetails.getNgaysinh());
+            existingStudent.setGioitinh(studentDetails.isGioitinh());
+            existingStudent.setDiachi(studentDetails.getDiachi());
+            existingStudent.setNghihoc(studentDetails.isNghihoc());
+            existingStudent.setLop(studentDetails.getLop());
             return studentRepository.save(existingStudent);
         }
         return null;
     }
 
-    public void deleteStudent(Long id) {
+    public void deleteStudent(String id) {
         studentRepository.deleteById(id);
     }
 }

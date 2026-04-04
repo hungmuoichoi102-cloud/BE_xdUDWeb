@@ -13,40 +13,33 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.entity.Student;
-import com.example.demo.repository.StudentRepository;
+import com.example.demo.entity.SinhVien;
+import com.example.demo.service.StudentService;
 
 @RestController
 @RequestMapping("/api/students")
 @CrossOrigin("*")
 public class StudentController {
     @Autowired
-    private StudentRepository studentRepository;   
+    private StudentService studentService;   
     
     @GetMapping
-    public List<Student> getAllStudents() {
-        return studentRepository.findAll();
+    public List<SinhVien> getAllStudents() {
+        return studentService.getAllStudents();
     }
 
     @PostMapping
-    public Student createStudent(@RequestBody Student student) {
-        return studentRepository.save(student);
+    public SinhVien createStudent(@RequestBody SinhVien student) {
+        return studentService.createStudent(student);
     }
 
     @PutMapping("/{id}")
-    public Student updateStudent(@PathVariable Long id, @RequestBody Student studentDetails) {
-        Student student = studentRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Student not found with id " + id));
-
-        student.setName(studentDetails.getName());
-        student.setEmail(studentDetails.getEmail());
-        student.setNgaysinh(studentDetails.getNgaysinh());
-
-        return studentRepository.save(student);
+    public SinhVien updateStudent(@PathVariable String id, @RequestBody SinhVien studentDetails) {
+        return studentService.updateStudent(id, studentDetails);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteStudent(@PathVariable Long id) {
-        studentRepository.deleteById(id);
+    public void deleteStudent(@PathVariable String id) {
+        studentService.deleteStudent(id);
     }
 }
