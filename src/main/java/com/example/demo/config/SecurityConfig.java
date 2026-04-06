@@ -6,6 +6,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.http.HttpMethod;
@@ -15,6 +16,9 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import com.example.demo.service.CustomUserDetailService;
+
+import jakarta.servlet.http.HttpServletResponse;
+
 import static org.springframework.security.config.Customizer.withDefaults;
 
 import java.util.Arrays;
@@ -34,6 +38,8 @@ public class SecurityConfig {
         http
             .cors(withDefaults())
             .csrf(csrf -> csrf.disable())
+            .sessionManagement(session -> session
+                .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))
             .authorizeHttpRequests(auth -> auth
                 //endpoint nào không cần xác thực thì thêm vào đây
                 .requestMatchers("/api/auth/**").permitAll()
@@ -52,7 +58,16 @@ public class SecurityConfig {
                 .requestMatchers("/api/grades/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
             )
-            .httpBasic(withDefaults());
+            .httpBasic(basic -> basic.authenticationEntryPoint((request,response, authException)->{
+                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);     ;
+                response.setContentType("application/json");
+                response.getWriter().write("{\"error\": \"Unauthorized\", \"message\": \"" + authException.getMessage() + "\"}");
+            }))
+            .exceptionHandling(ex -> ex.accessDeniedHandler((request,response,accessDeniedExeption)->{
+                response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+                response.setContentType("application/json");
+                response.getWriter().write("{\"error\": \"Forbidden\", \"message\": \"Ban khong co quyen truy cap!\"}");
+            }));
         return http.build();
     }
 
@@ -60,7 +75,7 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         
-        // Cho phép tất cả các nguồn (dùng Pattern để linh hoạt hơn)
+        // Cho phép tất cả các nguồn
         configuration.setAllowedOriginPatterns(Arrays.asList("*")); 
         
         // Cho phép tất cả các phương thức (GET, POST, PUT, DELETE,...)
