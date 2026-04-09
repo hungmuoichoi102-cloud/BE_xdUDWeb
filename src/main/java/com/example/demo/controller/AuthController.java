@@ -55,7 +55,7 @@ public class AuthController {
             return ResponseEntity.status(HttpStatus.CONFLICT)
                     .body(new AuthResponse("Username already exists", null));
         }
-        user.setRole("ROLE_USER");
+        user.setName(user.getUsername());
         User createdUser = userService.createUser(user);
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(new AuthResponse("Registration successful", createdUser));
