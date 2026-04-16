@@ -22,6 +22,9 @@ public class LopService {
         return lopRepository.findById(id);
     }
     public Lop createLop(Lop lop) {
+        if(lopRepository.existsById(lop.getMalop())){
+            throw new RuntimeException("Ma lop da ton tai");
+        }
         return lopRepository.save(lop);
     }
     public void deleteLop(String id) {

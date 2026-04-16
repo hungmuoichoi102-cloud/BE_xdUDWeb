@@ -23,6 +23,9 @@ public class StudentService {
     }
 
     public SinhVien createStudent(SinhVien student) {
+        if(studentRepository.existsById(student.getMssv())){
+            throw new RuntimeException("Lỗi: MSSV đã tồn tại");
+        }
         return studentRepository.save(student);
     }
 

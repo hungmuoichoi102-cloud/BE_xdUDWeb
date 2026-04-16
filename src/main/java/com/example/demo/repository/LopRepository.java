@@ -7,5 +7,5 @@ import com.example.demo.entity.Lop;
 
 @Repository
 public interface LopRepository extends JpaRepository<Lop, String> {
-   
+   boolean existsById(String malop);
 } 

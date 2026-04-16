@@ -7,5 +7,6 @@ import com.example.demo.entity.MonHoc;
 
 @Repository
 public interface MonHocRepository extends JpaRepository<MonHoc, String> {
+    boolean existsById(String mamh);
 
 }

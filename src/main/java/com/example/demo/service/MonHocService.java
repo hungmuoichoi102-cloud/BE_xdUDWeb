@@ -21,6 +21,9 @@ public class MonHocService {
         return monHocRepository.findById(id);
     }
     public MonHoc createMonHoc(MonHoc monHoc) {
+        if(monHocRepository.existsById(monHoc.getMamh())){
+            throw new RuntimeException("Ma mon hoc da ton tai");
+        }
         return monHocRepository.save(monHoc);
     }
     public void deleteMonHoc(String id) {
