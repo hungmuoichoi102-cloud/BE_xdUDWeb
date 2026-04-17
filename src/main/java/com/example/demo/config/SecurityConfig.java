@@ -44,6 +44,7 @@ public class SecurityConfig {
                 //endpoint nào không cần xác thực thì thêm vào đây
                 .requestMatchers("/api/auth/**").permitAll()
                 .requestMatchers("/users/**").permitAll()
+                .requestMatchers("/api/transfer/**").hasAnyRole("USER","ADMIN")
                 //phân quyền cho sinh viên
                 .requestMatchers(HttpMethod.GET, "/api/students/**").hasAnyRole("USER", "ADMIN")
                 .requestMatchers("/api/students/**").hasRole("ADMIN")

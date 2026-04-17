@@ -1,5 +1,7 @@
 package com.example.demo.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -22,4 +24,9 @@ public class User {
 
     @Column(nullable = false)
     private String role;
+
+
+    @OneToOne(mappedBy = "user")
+    @JsonIgnore
+    private SinhVien sinhVien;
 }

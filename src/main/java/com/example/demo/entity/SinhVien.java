@@ -5,11 +5,13 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
 
@@ -26,6 +28,12 @@ public class SinhVien {
     private String diachi;
     private boolean nghihoc;
 
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "username",referencedColumnName = "username")
+    @JsonIgnore
+    private User user;
+
     @ManyToOne
     @JoinColumn(name = "malop")
     @JsonIgnoreProperties({"sinhviens","tenlop"})
@@ -33,4 +41,8 @@ public class SinhVien {
     @OneToMany(mappedBy = "sinhVien")
     @JsonIgnore
     private List<Grade> grades;
+
+    @OneToMany(mappedBy = "sinhVienT")
+    @JsonIgnore
+    private List<TransferRequest> transferRequest;
 }

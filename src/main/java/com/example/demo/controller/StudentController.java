@@ -1,8 +1,13 @@
 package com.example.demo.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,6 +29,22 @@ public class StudentController {
     @GetMapping
     public List<SinhVien> getAllStudents() {
         return studentService.getAllStudents();
+    }
+
+    @GetMapping("/profile")
+    public ResponseEntity<?> getSVFromUserId(){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if(auth == null || !auth.isAuthenticated()){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("chua dang nhap");
+        }
+
+        String currUsername = auth.getName();
+        try{
+            Optional<SinhVien> sinhVien = studentService.getStudentProfileByUsername(currUsername);
+            return ResponseEntity.ok(sinhVien);
+        }catch(RuntimeException e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
     }
 
     @PostMapping
