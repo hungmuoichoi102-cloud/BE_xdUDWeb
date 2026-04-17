@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import com.example.demo.entity.User;
 import com.example.demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,5 +25,9 @@ public class UserController {
     @GetMapping("/users/{id}") // Kết hợp lại thành /users/{id}
     public User getUserById(@PathVariable Long id) {
         return userRepository.findById(id).orElse(null);
+    }
+    @DeleteMapping("/users/{id}")
+    public void deleteUser(@PathVariable long id){
+        userRepository.deleteById(id);
     }
 }

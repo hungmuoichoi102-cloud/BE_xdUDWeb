@@ -18,14 +18,7 @@ public class BackendXdpmwebApplication {
     @Bean
 CommandLineRunner initDatabase(UserRepository repository, PasswordEncoder passwordEncoder) {
     return args -> {
-        if (repository.count() == 0) {
-            User user1 = new User();
-            user1.setName("Nguyen Van A");
-            user1.setUsername("nguyenvana");
-            user1.setPassword(passwordEncoder.encode("password123"));
-            user1.setRole("ROLE_USER");
-            repository.save(user1);
-            
+        if (repository.count() == 0) {           
             User user2 = new User();
             user2.setName("Le Thi B");
             user2.setUsername("lethib");
