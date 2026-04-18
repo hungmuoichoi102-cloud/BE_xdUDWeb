@@ -2,7 +2,6 @@ package com.example.demo.entity;
 
 import java.time.LocalDateTime;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -25,6 +24,5 @@ public class TransferRequest {
 
     @ManyToOne
     @JoinColumn(name = "mssv")
-    @JsonIgnore
     private SinhVien sinhVienT;
 }
